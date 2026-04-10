@@ -17,10 +17,12 @@ This plugin integrates the hosted ProofAge verification flow with WordPress and 
 - `redirect`: opens the hosted ProofAge verification in the current browser tab.
 - `new_tab`: opens the hosted ProofAge verification in a new browser tab.
 
-## Not Supported in v1
+## External Service Disclosure
 
-- A custom in-page ProofAge capture UI.
-- Theme-specific quick-view integrations beyond the generic add-to-cart interception hooks.
+- This plugin requires a ProofAge account and valid API credentials.
+- It connects to the ProofAge API to create verifications, fetch verification status, and process signed webhook callbacks.
+- When a shopper starts verification, the plugin sends limited verification request data to ProofAge, such as an external identifier, callback or return URL, supported storefront language, and verification-related metadata.
+- The plugin stores limited verification state locally in WordPress and WooCommerce, including verification status, verification ID, external ID, return URL, timestamps, session token, and optional order verification metadata.
 
 ## Installation
 
@@ -67,7 +69,7 @@ The plugin appends an `origin` query parameter automatically for each verificati
 
 1. Frontend JavaScript calls `POST /wp-json/proofage/v1/session`.
 2. The plugin creates a ProofAge verification and stores a pending local session.
-3. The shopper completes the hosted flow via redirect or a new tab.
+3. The shopper completes the hosted flow via iframe modal, redirect, or a new tab.
 4. ProofAge sends a webhook to `/wp-json/proofage/v1/webhook`.
 5. The browser returns to `/?proofage-return=1`, where the plugin reconciles transient state and updates the local session when a terminal decision is available.
 
@@ -80,12 +82,6 @@ The plugin appends an `origin` query parameter automatically for each verificati
 - Cart validation.
 - Checkout validation.
 - Store API add-to-cart validation for block-based flows.
-
-## Known Limitations
-
-- WooCommerce is not present in the current local `wordpress` tree, so Woo-specific runtime behavior still needs testing in a real WooCommerce installation.
-- The plugin does not yet implement uninstall-time cleanup for user meta and transients beyond the main option.
-- Browser automation coverage for popup/new-tab return flows has not been added yet.
 
 ## Verification
 

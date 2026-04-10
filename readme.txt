@@ -20,6 +20,7 @@ With this plugin you can:
 * protect WooCommerce products and product categories
 * block add-to-cart, cart, checkout, and Store API flows until verification is complete
 * show a full-page gate or a blocking overlay, depending on the protected content
+* launch the hosted ProofAge flow in an iframe modal, the current window, or a new tab
 * store a verification snapshot on WooCommerce orders and show it in the admin order details panel
 * localize gate copy and pass the supported storefront language to ProofAge when creating a verification
 
@@ -83,16 +84,15 @@ Yes. For WooCommerce orders the plugin stores a ProofAge verification snapshot i
 
 = Does this plugin embed ProofAge in an iframe or modal? =
 
-Yes. Hosted verification can open in an iframe modal, in the current window, or in a new tab.
+Yes. Hosted verification can open in an iframe modal, in the current window, or in a new tab, depending on the selected launch mode.
 
 == Changelog ==
 
 = 0.1.0 =
 
 * Initial release.
-* Added iframe modal launch mode for hosted verification.
 * Added WordPress and WooCommerce protection rules.
-* Added hosted verification launch flows for redirect and new tab.
+* Added hosted verification launch flows for iframe modal, redirect, and new tab.
 * Added WooCommerce order verification snapshot in admin order details.
 * Added multilingual gate text support through Polylang and WPML String Translation.
 * Added storefront language passthrough for supported ProofAge SDK languages.
@@ -101,4 +101,4 @@ Yes. Hosted verification can open in an iframe modal, in the current window, or 
 
 = 0.1.0 =
 
-Initial release.
+ Initial release.
