@@ -9,6 +9,10 @@ use ProofAge\WordPress\Support\Options;
 use ProofAge\WordPress\Verification\RulesEngine;
 use ProofAge\WordPress\Verification\SessionManager;
 
+if (! defined('ABSPATH')) {
+    exit;
+}
+
 final class Gatekeeper
 {
     /**
@@ -152,6 +156,7 @@ final class Gatekeeper
         return is_admin()
             || wp_doing_ajax()
             || (defined('REST_REQUEST') && REST_REQUEST)
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- this only detects the external return route.
             || isset($_GET['proofage-return'])
             || is_feed()
             || is_preview();

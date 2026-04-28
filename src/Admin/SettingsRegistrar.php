@@ -5,6 +5,10 @@ namespace ProofAge\WordPress\Admin;
 use ProofAge\WordPress\Support\LocalizedGateTexts;
 use ProofAge\WordPress\Support\Options;
 
+if (! defined('ABSPATH')) {
+    exit;
+}
+
 final class SettingsRegistrar
 {
     public const PAGE_SLUG = 'proofage-age-verification';
@@ -196,7 +200,7 @@ final class SettingsRegistrar
                 'label' => __('Secret key', 'proofage-age-verification'),
                 'section' => 'proofage_api',
                 'type' => 'password',
-                'description' => __('Secret key used for HMAC signing. Stored in WordPress options and masked in logs.', 'proofage-age-verification'),
+                'description' => __('Secret key used for HMAC signing. Stored in WordPress options.', 'proofage-age-verification'),
             ],
             [
                 'key' => 'site_enabled',
@@ -227,20 +231,6 @@ final class SettingsRegistrar
                 'section' => 'proofage_behavior',
                 'type' => 'number',
                 'description' => __('How long an approved verification remains valid.', 'proofage-age-verification'),
-            ],
-            [
-                'key' => 'logging_enabled',
-                'label' => __('Enable logging', 'proofage-age-verification'),
-                'section' => 'proofage_behavior',
-                'type' => 'checkbox',
-                'description' => __('Write masked operational logs for requests and decisions.', 'proofage-age-verification'),
-            ],
-            [
-                'key' => 'debug_mode',
-                'label' => __('Enable debug mode', 'proofage-age-verification'),
-                'section' => 'proofage_behavior',
-                'type' => 'checkbox',
-                'description' => __('Include extra diagnostic details in logs and admin notices.', 'proofage-age-verification'),
             ],
             [
                 'key' => 'protected_category_ids',

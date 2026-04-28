@@ -3,9 +3,12 @@
 namespace ProofAge\WordPress\Http;
 
 use ProofAge\WordPress\ProofAge\WebhookSignatureVerifier;
-use ProofAge\WordPress\Support\Logger;
 use ProofAge\WordPress\Support\Options;
 use ProofAge\WordPress\Verification\SessionManager;
+
+if (! defined('ABSPATH')) {
+    exit;
+}
 use WP_REST_Request;
 use WP_REST_Response;
 
@@ -13,7 +16,6 @@ final class WebhookController
 {
     public function __construct(
         private readonly SessionManager $sessionManager,
-        private readonly Logger $logger,
         private readonly WebhookSignatureVerifier $signatureVerifier,
     ) {
     }
@@ -26,8 +28,6 @@ final class WebhookController
         $secretKey = (string) Options::get('secret_key', '');
 
         if ($secretKey === '' || ! $this->signatureVerifier->isValid($timestamp, $rawBody, $signature, $secretKey)) {
-            $this->logger->error('Rejected ProofAge webhook because signature validation failed.');
-
             return new WP_REST_Response([
                 'ok' => false,
                 'message' => 'Invalid signature.',
@@ -62,11 +62,6 @@ final class WebhookController
         } else {
             $this->sessionManager->markFailed($verificationId, $status);
         }
-
-        $this->logger->log('Processed ProofAge webhook.', [
-            'verification_id' => $verificationId,
-            'status' => $status,
-        ]);
 
         return new WP_REST_Response([
             'ok' => true,

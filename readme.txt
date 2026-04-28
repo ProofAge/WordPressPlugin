@@ -2,7 +2,7 @@
 Contributors: proofage
 Tags: age verification, age gate, woocommerce, checkout, ecommerce
 Requires at least: 6.4
-Tested up to: 6.9.4
+Tested up to: 6.9
 Requires PHP: 8.1
 Stable tag: 0.1.0
 License: GPLv2 or later
@@ -32,6 +32,8 @@ External service disclosure:
 * it connects to the ProofAge API to create verifications, fetch verification status, and process signed webhook callbacks
 * when a shopper starts verification, the plugin sends limited verification request data to ProofAge, such as an external identifier, callback or return URL, supported storefront language, and verification-related metadata
 * the plugin stores limited verification state locally in WordPress and WooCommerce, including verification status, verification ID, external ID, return URL, timestamps, session token, and optional order verification metadata
+* ProofAge Privacy Policy: https://proofage.xyz/privacy
+* ProofAge Terms of Service: https://proofage.xyz/terms
 
 Supported browser flows:
 
@@ -77,6 +79,10 @@ Yes. This plugin connects to ProofAge to create verifications, fetch status upda
 = What data does the plugin send to ProofAge and store locally? =
 
 When a shopper starts verification, the plugin sends limited verification request data to ProofAge, such as an external identifier, callback or return URL, supported storefront language, and verification-related metadata. The plugin stores limited verification state locally in WordPress and WooCommerce, including verification status, verification ID, external ID, return URL, timestamps, session token, and optional order verification metadata.
+
+= Where can I review the ProofAge legal documents? =
+
+The ProofAge Privacy Policy is available at https://proofage.xyz/privacy and the Terms of Service are available at https://proofage.xyz/terms.
 
 = Does the plugin store verification data on orders? =
 

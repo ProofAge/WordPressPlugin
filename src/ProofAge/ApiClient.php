@@ -2,18 +2,16 @@
 
 namespace ProofAge\WordPress\ProofAge;
 
-use ProofAge\WordPress\Support\Logger;
 use ProofAge\WordPress\Support\Options;
 use WP_Error;
+
+if (! defined('ABSPATH')) {
+    exit;
+}
 
 final class ApiClient
 {
     private const BASE_URL = 'https://api.proofage.xyz';
-
-    public function __construct(
-        private readonly Logger $logger,
-    ) {
-    }
 
     public function createVerification(
         string $externalId,
@@ -96,11 +94,6 @@ final class ApiClient
         ]);
 
         if (is_wp_error($response)) {
-            $this->logger->error('ProofAge request failed before receiving a response.', [
-                'path' => $path,
-                'error' => $response->get_error_message(),
-            ]);
-
             return $response;
         }
 
@@ -112,12 +105,6 @@ final class ApiClient
             $message = is_array($decoded)
                 ? (string) ($decoded['error']['message'] ?? __('Unknown ProofAge API error.', 'proofage-age-verification'))
                 : __('Unknown ProofAge API error.', 'proofage-age-verification');
-
-            $this->logger->error('ProofAge API request returned an error response.', [
-                'path' => $path,
-                'status_code' => $statusCode,
-                'response_body' => $rawBody,
-            ]);
 
             return new WP_Error('proofage_api_error', $message, [
                 'status' => $statusCode,

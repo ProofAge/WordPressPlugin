@@ -6,6 +6,10 @@ use ProofAge\WordPress\Support\LocalizedGateTexts;
 use ProofAge\WordPress\Verification\SessionManager;
 use WP_Error;
 
+if (! defined('ABSPATH')) {
+    exit;
+}
+
 final class CartCheckoutGuard
 {
     public function __construct(
@@ -61,7 +65,7 @@ final class CartCheckoutGuard
         }
 
         if ($this->productGuard->evaluateProduct((int) $product->get_id())->requiresVerification) {
-            throw new \Exception(LocalizedGateTexts::get('gate_description', __('Age verification is required before adding this product to the cart.', 'proofage-age-verification')));
+            throw new \Exception(esc_html(LocalizedGateTexts::get('gate_description', __('Age verification is required before adding this product to the cart.', 'proofage-age-verification'))));
         }
     }
 
@@ -72,7 +76,7 @@ final class CartCheckoutGuard
         }
 
         if ($this->productGuard->evaluateProduct((int) $product->get_id())->requiresVerification) {
-            throw new \Exception(LocalizedGateTexts::get('gate_description', __('Age verification is required before continuing.', 'proofage-age-verification')));
+            throw new \Exception(esc_html(LocalizedGateTexts::get('gate_description', __('Age verification is required before continuing.', 'proofage-age-verification'))));
         }
     }
 

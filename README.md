@@ -31,6 +31,8 @@ This plugin provides a first-class WordPress and WooCommerce integration: an adm
 - It connects to the ProofAge API to create verifications, fetch verification status, and process signed webhook callbacks.
 - When a shopper starts verification, the plugin sends limited verification request data to ProofAge, such as an external identifier, callback or return URL, supported storefront language, and verification-related metadata.
 - The plugin stores limited verification state locally in WordPress and WooCommerce, including verification status, verification ID, external ID, return URL, timestamps, session token, and optional order verification metadata.
+- Privacy Policy: [https://proofage.xyz/privacy](https://proofage.xyz/privacy)
+- Terms of Service: [https://proofage.xyz/terms](https://proofage.xyz/terms)
 
 ## Installation
 

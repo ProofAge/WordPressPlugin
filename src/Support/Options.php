@@ -2,6 +2,10 @@
 
 namespace ProofAge\WordPress\Support;
 
+if (! defined('ABSPATH')) {
+    exit;
+}
+
 final class Options
 {
     public const OPTION_KEY = 'proofage_age_verification_settings';
@@ -18,8 +22,6 @@ final class Options
             'launch_mode' => 'redirect',
             'content_display_mode' => 'gate',
             'session_ttl_hours' => 24,
-            'debug_mode' => false,
-            'logging_enabled' => true,
             'protect_wc_categories_enabled' => false,
             'protect_wc_products_enabled' => false,
             'exclude_wc_categories_enabled' => false,
@@ -75,8 +77,6 @@ final class Options
             'launch_mode' => $launchMode,
             'content_display_mode' => self::sanitizeDisplayMode($input['content_display_mode'] ?? $defaults['content_display_mode']),
             'session_ttl_hours' => self::sanitizeTtl($input['session_ttl_hours'] ?? $defaults['session_ttl_hours']),
-            'debug_mode' => self::sanitizeBool($input['debug_mode'] ?? $defaults['debug_mode']),
-            'logging_enabled' => self::sanitizeBool($input['logging_enabled'] ?? $defaults['logging_enabled']),
             'protect_wc_categories_enabled' => self::sanitizeSelectorToggle($input, $existing, 'protect_wc_categories_enabled', $protectedCategoryIds),
             'protect_wc_products_enabled' => self::sanitizeSelectorToggle($input, $existing, 'protect_wc_products_enabled', $protectedProductIds),
             'exclude_wc_categories_enabled' => self::sanitizeSelectorToggle($input, $existing, 'exclude_wc_categories_enabled', $excludedCategoryIds),
@@ -223,7 +223,7 @@ final class Options
             return sanitize_text_field((string) $value);
         }
 
-        return trim(strip_tags((string) $value));
+        return trim(wp_strip_all_tags((string) $value));
     }
 
     private static function sanitizeTextarea(mixed $value): string
@@ -232,6 +232,6 @@ final class Options
             return sanitize_textarea_field((string) $value);
         }
 
-        return trim(strip_tags((string) $value));
+        return trim(wp_strip_all_tags((string) $value));
     }
 }

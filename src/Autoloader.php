@@ -2,6 +2,10 @@
 
 namespace ProofAge\WordPress;
 
+if (! defined('ABSPATH')) {
+    exit;
+}
+
 final class Autoloader
 {
     private const PREFIX = __NAMESPACE__ . '\\';

@@ -2,6 +2,10 @@
 
 namespace ProofAge\WordPress\Verification;
 
+if (! defined('ABSPATH')) {
+    exit;
+}
+
 final class RulesEngine
 {
     public function evaluate(array $settings, array $subject): RuleDecision

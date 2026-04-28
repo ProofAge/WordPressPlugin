@@ -4,6 +4,10 @@ namespace ProofAge\WordPress\Admin;
 
 use ProofAge\WordPress\ProofAge\ApiClient;
 
+if (! defined('ABSPATH')) {
+    exit;
+}
+
 final class SettingsPage
 {
     public function __construct(
@@ -150,12 +154,24 @@ final class SettingsPage
 
     private function renderServiceDisclosure(): void
     {
+        $privacyPolicyUrl = 'https://proofage.xyz/privacy';
+        $termsOfServiceUrl = 'https://proofage.xyz/terms';
+
         echo '<div class="card" style="max-width: 960px; margin: 16px 0; padding: 16px;">';
         echo '<h2>' . esc_html__('External service disclosure', 'proofage-age-verification') . '</h2>';
         echo '<p>' . esc_html__('This plugin requires a ProofAge account and valid API credentials.', 'proofage-age-verification') . '</p>';
         echo '<p>' . esc_html__('It connects to the ProofAge API to create verifications, check verification status, and process signed webhook callbacks.', 'proofage-age-verification') . '</p>';
         echo '<p>' . esc_html__('When a shopper starts verification, the plugin sends limited verification request data to ProofAge, such as an external identifier, callback or return URL, supported storefront language, and verification-related metadata.', 'proofage-age-verification') . '</p>';
         echo '<p>' . esc_html__('The plugin stores limited verification state locally in WordPress and WooCommerce, including verification status, verification ID, external ID, return URL, timestamps, session token, and optional order verification metadata.', 'proofage-age-verification') . '</p>';
+        printf(
+            '<p>%1$s <a href="%2$s" target="_blank" rel="noopener noreferrer">%3$s</a>. %4$s <a href="%5$s" target="_blank" rel="noopener noreferrer">%6$s</a>.</p>',
+            esc_html__('Privacy Policy:', 'proofage-age-verification'),
+            esc_url($privacyPolicyUrl),
+            esc_html($privacyPolicyUrl),
+            esc_html__('Terms of Service:', 'proofage-age-verification'),
+            esc_url($termsOfServiceUrl),
+            esc_html($termsOfServiceUrl)
+        );
         echo '</div>';
     }
 

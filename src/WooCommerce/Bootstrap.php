@@ -5,6 +5,10 @@ namespace ProofAge\WordPress\WooCommerce;
 use ProofAge\WordPress\Admin\CategoryMeta;
 use ProofAge\WordPress\Admin\ProductMeta;
 
+if (! defined('ABSPATH')) {
+    exit;
+}
+
 final class Bootstrap
 {
     public function __construct(

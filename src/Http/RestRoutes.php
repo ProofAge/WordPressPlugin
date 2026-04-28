@@ -10,6 +10,10 @@ use ProofAge\WordPress\Verification\SessionManager;
 use WP_Error;
 use WP_REST_Request;
 
+if (! defined('ABSPATH')) {
+    exit;
+}
+
 final class RestRoutes
 {
     public function __construct(

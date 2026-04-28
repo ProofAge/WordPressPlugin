@@ -2,6 +2,10 @@
 
 namespace ProofAge\WordPress\Admin;
 
+if (! defined('ABSPATH')) {
+    exit;
+}
+
 final class ScopeSelectorProvider
 {
     public const SOURCE_WC_CATEGORIES = 'wc_categories';
@@ -132,6 +136,7 @@ final class ScopeSelectorProvider
             'hide_empty' => false,
             'search' => $query,
             'number' => 20,
+            // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- admin selector queries are capped to 20 results.
             'exclude' => $excludedIds,
             'orderby' => 'name',
             'order' => 'ASC',
@@ -170,6 +175,7 @@ final class ScopeSelectorProvider
         $posts = get_posts([
             'post_type' => $postType,
             's' => $query,
+            // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- admin selector queries are capped to 20 results.
             'post__not_in' => $excludedIds,
             'numberposts' => 20,
             'post_status' => ['publish', 'private', 'draft', 'pending', 'future'],
@@ -212,6 +218,7 @@ final class ScopeSelectorProvider
         foreach ($expectedIds as $id) {
             $merged[] = $indexed[$id] ?? [
                 'id' => $id,
+                /* translators: %d is the missing item identifier. */
                 'label' => sprintf(__('Unavailable item (#%d)', 'proofage-age-verification'), $id),
             ];
         }
@@ -230,6 +237,7 @@ final class ScopeSelectorProvider
         foreach ($ids as $id) {
             $items[] = [
                 'id' => $id,
+                /* translators: %d is the missing item identifier. */
                 'label' => sprintf(__('Unavailable item (#%d)', 'proofage-age-verification'), $id),
             ];
         }

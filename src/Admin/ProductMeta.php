@@ -2,6 +2,10 @@
 
 namespace ProofAge\WordPress\Admin;
 
+if (! defined('ABSPATH')) {
+    exit;
+}
+
 final class ProductMeta
 {
     public const META_REQUIRES = '_proofage_requires_verification';

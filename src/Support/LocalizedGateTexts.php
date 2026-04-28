@@ -2,6 +2,10 @@
 
 namespace ProofAge\WordPress\Support;
 
+if (! defined('ABSPATH')) {
+    exit;
+}
+
 final class LocalizedGateTexts
 {
     private const GROUP = 'ProofAge';
@@ -65,6 +69,7 @@ final class LocalizedGateTexts
         }
 
         if (self::hasWpmlTranslation()) {
+            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WPML exposes this external hook name.
             return (string) apply_filters('wpml_translate_single_string', $value, self::GROUP, self::stringName($key));
         }
 
@@ -101,6 +106,7 @@ final class LocalizedGateTexts
             }
 
             if (self::hasWpmlRegistration()) {
+                // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WPML exposes this external hook name.
                 do_action('wpml_register_single_string', self::GROUP, $config['name'], $value);
             }
         }

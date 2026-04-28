@@ -2,6 +2,10 @@
 
 namespace ProofAge\WordPress\Support;
 
+if (! defined('ABSPATH')) {
+    exit;
+}
+
 final class VerificationLanguage
 {
     /**
@@ -129,6 +133,7 @@ final class VerificationLanguage
         }
 
         if (function_exists('apply_filters')) {
+            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WPML exposes this external hook name.
             $wpmlLanguage = apply_filters('wpml_current_language', null);
 
             if (is_string($wpmlLanguage) && $wpmlLanguage !== '') {

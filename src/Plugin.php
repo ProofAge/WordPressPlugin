@@ -15,7 +15,6 @@ use ProofAge\WordPress\Http\WebhookController;
 use ProofAge\WordPress\ProofAge\ApiClient;
 use ProofAge\WordPress\ProofAge\WebhookSignatureVerifier;
 use ProofAge\WordPress\Support\LocalizedGateTexts;
-use ProofAge\WordPress\Support\Logger;
 use ProofAge\WordPress\Support\Options;
 use ProofAge\WordPress\Verification\RulesEngine;
 use ProofAge\WordPress\Verification\SessionManager;
@@ -25,19 +24,20 @@ use ProofAge\WordPress\WooCommerce\CartCheckoutGuard;
 use ProofAge\WordPress\WooCommerce\OrderVerificationDetails;
 use ProofAge\WordPress\WooCommerce\ProductGuard;
 
+if (! defined('ABSPATH')) {
+    exit;
+}
+
 final class Plugin
 {
     public function boot(): void
     {
-        add_action('init', [$this, 'loadTextDomain']);
-
-        $logger = new Logger();
         $localizedGateTexts = new LocalizedGateTexts();
         $stateRepository = new StateRepository();
         $sessionManager = new SessionManager($stateRepository);
         $rulesEngine = new RulesEngine();
-        $apiClient = new ApiClient($logger);
-        $webhookController = new WebhookController($sessionManager, $logger, new WebhookSignatureVerifier());
+        $apiClient = new ApiClient();
+        $webhookController = new WebhookController($sessionManager, new WebhookSignatureVerifier());
         $scopeSelectorProvider = new ScopeSelectorProvider();
 
         (new SettingsRegistrar($scopeSelectorProvider))->registerHooks();
@@ -61,15 +61,6 @@ final class Plugin
                 new OrderVerificationDetails($productGuard, $sessionManager),
             ))->registerHooks();
         }
-    }
-
-    public function loadTextDomain(): void
-    {
-        load_plugin_textdomain(
-            'proofage-age-verification',
-            false,
-            dirname(plugin_basename(PROOFAGE_WP_PLUGIN_FILE)) . '/languages'
-        );
     }
 
     public static function activate(): void

@@ -2,6 +2,10 @@
 
 namespace ProofAge\WordPress\ProofAge;
 
+if (! defined('ABSPATH')) {
+    exit;
+}
+
 final class RequestSigner
 {
     public function __construct(private readonly string $secretKey)

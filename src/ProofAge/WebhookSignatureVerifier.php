@@ -2,6 +2,10 @@
 
 namespace ProofAge\WordPress\ProofAge;
 
+if (! defined('ABSPATH')) {
+    exit;
+}
+
 final class WebhookSignatureVerifier
 {
     public function __construct(private readonly int $replayWindowSeconds = 300)

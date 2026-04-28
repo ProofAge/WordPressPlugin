@@ -6,6 +6,10 @@ use ProofAge\WordPress\ProofAge\ApiClient;
 use ProofAge\WordPress\Verification\ApprovalMatcher;
 use ProofAge\WordPress\Verification\SessionManager;
 
+if (! defined('ABSPATH')) {
+    exit;
+}
+
 final class ReturnController
 {
     public function __construct(
@@ -21,14 +25,23 @@ final class ReturnController
 
     public function maybeHandle(): void
     {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- external return requests cannot carry a WordPress nonce.
         if (! isset($_GET['proofage-return'])) {
             return;
         }
 
         $state = $this->sessionManager->getState();
         $verificationId = (string) ($state['verification_id'] ?? '');
+        $origin = '';
+
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- external return requests cannot carry a WordPress nonce.
+        if (isset($_GET['origin'])) {
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- external return requests cannot carry a WordPress nonce and the value is unslashed and sanitized before use.
+            $origin = esc_url_raw(rawurldecode((string) wp_unslash($_GET['origin'])));
+        }
+
         $originReturnUrl = $this->sessionManager->resolveReturnUrl(
-            isset($_GET['origin']) ? rawurldecode((string) $_GET['origin']) : (string) ($state['return_url'] ?? '')
+            $origin !== '' ? $origin : (string) ($state['return_url'] ?? '')
         );
 
         if ($verificationId !== '' && ! $this->sessionManager->isVerified()) {

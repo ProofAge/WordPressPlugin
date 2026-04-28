@@ -10,6 +10,10 @@ use ProofAge\WordPress\Verification\RuleDecision;
 use ProofAge\WordPress\Verification\RulesEngine;
 use ProofAge\WordPress\Verification\SessionManager;
 
+if (! defined('ABSPATH')) {
+    exit;
+}
+
 final class ProductGuard
 {
     public function __construct(

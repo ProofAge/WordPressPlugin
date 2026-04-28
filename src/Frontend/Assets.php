@@ -7,6 +7,10 @@ use ProofAge\WordPress\Support\Options;
 use ProofAge\WordPress\Support\VerificationLanguage;
 use ProofAge\WordPress\Verification\SessionManager;
 
+if (! defined('ABSPATH')) {
+    exit;
+}
+
 final class Assets
 {
     public function __construct(private readonly SessionManager $sessionManager)

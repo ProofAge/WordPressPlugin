@@ -4,6 +4,10 @@ namespace ProofAge\WordPress\Verification;
 
 use ProofAge\WordPress\Support\Options;
 
+if (! defined('ABSPATH')) {
+    exit;
+}
+
 final class SessionManager
 {
     public function __construct(private readonly StateRepository $stateRepository)

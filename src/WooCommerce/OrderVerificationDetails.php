@@ -4,6 +4,10 @@ namespace ProofAge\WordPress\WooCommerce;
 
 use ProofAge\WordPress\Verification\SessionManager;
 
+if (! defined('ABSPATH')) {
+    exit;
+}
+
 final class OrderVerificationDetails
 {
     private const META_REQUIRED = '_proofage_verification_required';

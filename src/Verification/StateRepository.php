@@ -4,6 +4,10 @@ namespace ProofAge\WordPress\Verification;
 
 use ProofAge\WordPress\Support\Options;
 
+if (! defined('ABSPATH')) {
+    exit;
+}
+
 final class StateRepository
 {
     private const COOKIE_NAME = 'proofage_verification_state';
@@ -131,7 +135,8 @@ final class StateRepository
      */
     private function readCookieState(): array
     {
-        $raw = $_COOKIE[self::COOKIE_NAME] ?? null;
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- the signed payload is validated before decoding.
+        $raw = isset($_COOKIE[self::COOKIE_NAME]) ? wp_unslash($_COOKIE[self::COOKIE_NAME]) : null;
 
         if (! is_string($raw) || ! str_contains($raw, '.')) {
             return [];
